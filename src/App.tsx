@@ -10,6 +10,7 @@ const translations = {
       about: 'من نحن',
       suites: 'الأجنحة',
       services: 'الخدمات',
+      location: 'الموقع',
       contact: 'تواصل معنا',
     },
     header: {
@@ -20,6 +21,7 @@ const translations = {
       subtitle: 'في ريڤا تبدأ تجربة إقامة مختلفة، عنوانها الراحة، الخصوصية، والجودة. أجنحة عائلية مجهزة بالكامل لراحتكم.',
       whatsapp: 'تواصل عبر واتساب',
       booking: 'احجز عبر Booking.com',
+      viewMap: '📍 عرض الموقع على الخارطة',
     },
     about: {
       title: 'من نحن',
@@ -51,6 +53,12 @@ const translations = {
       title: 'معرض الصور',
       subtitle: 'اكتشف فخامة أجنحتنا',
     },
+    location: {
+      title: 'موقعنا',
+      subtitle: 'نقع في قلب إربد، على مقربة من أهم المعالم والخدمات.',
+      address: 'إربد، المملكة الأردنية الهاشمية',
+      nearby: 'قريب من الجامعات والأسواق والمرافق الحيوية',
+    },
     contact: {
       title: 'تواصل معنا',
       subtitle: 'نحن هنا لخدمتكم',
@@ -76,6 +84,7 @@ const translations = {
       about: 'About Us',
       suites: 'Suites',
       services: 'Services',
+      location: 'Location',
       contact: 'Contact',
     },
     header: {
@@ -86,6 +95,7 @@ const translations = {
       subtitle: 'At Riva, a different stay experience begins—defined by comfort, privacy, and quality. Fully equipped family suites designed for your utmost comfort.',
       whatsapp: 'Contact via WhatsApp',
       booking: 'Book via Booking.com',
+      viewMap: '📍 View Location on Map',
     },
     about: {
       title: 'About Us',
@@ -116,6 +126,12 @@ const translations = {
     gallery: {
       title: 'Gallery',
       subtitle: 'Discover the Luxury of Our Suites',
+    },
+    location: {
+      title: 'Our Location',
+      subtitle: 'Located in the heart of Irbid, close to key landmarks and services.',
+      address: 'Irbid, Hashemite Kingdom of Jordan',
+      nearby: 'Close to universities, markets, and vital facilities',
     },
     contact: {
       title: 'Contact Us',
@@ -171,6 +187,8 @@ function App() {
   const whatsappLink = 'https://wa.me/962790097564?text=' + encodeURIComponent(lang === 'ar' ? 'مرحباً، أود الاستفسار عن الأجنحة السكنية' : 'Hello, I would like to inquire about the suites');
   const instagramLink = 'https://www.instagram.com/rivasuites?utm_source=ig_web_button_share_sheet&stkn=ZDNlZDc0MzIxNw==';
   const facebookLink = 'https://www.facebook.com/profile.php?id=61591212942882';
+  const googleMapsLink = 'https://www.google.com/maps/place/%D8%B1%D9%8A%DA%A4%D8%A7+%D9%84%D9%84%D8%A3%D8%AC%D9%86%D8%AD%D8%A9+%D8%A7%D9%84%D8%B3%D9%83%D9%86%D9%8A%D8%A9%E2%80%AD/@32.5375484,35.862416,17z/data=!3m1!4b1!4m9!3m8!1s0x151c7708837391cb:0x6f7e35ce224a5937!5m2!4m1!1i2!8m2!3d32.5375484!4d35.862416!16s%2Fg%2F11ytfhls0s!5m1!1e1?entry=ttu&g_ep=EgoyMDI2MDkwOS4wIKXMDSoASAFQAw%3D%3D';
+  const googleMapsEmbed = 'https://maps.google.com/maps?q=32.5375484,35.862416&hl=' + lang + '&z=15&output=embed';
 
   return (
     <div className={`min-h-screen font-sans ${lang === 'ar' ? 'font-cairo' : 'font-montserrat'}`}>
@@ -204,6 +222,7 @@ function App() {
                 { key: 'about', id: 'about' },
                 { key: 'suites', id: 'gallery' },
                 { key: 'services', id: 'features' },
+                { key: 'location', id: 'location' },
                 { key: 'contact', id: 'contact' },
               ].map((item) => (
                 <button
@@ -263,6 +282,7 @@ function App() {
                 { key: 'about', id: 'about' },
                 { key: 'suites', id: 'gallery' },
                 { key: 'services', id: 'features' },
+                { key: 'location', id: 'location' },
                 { key: 'contact', id: 'contact' },
               ].map((item) => (
                 <button
@@ -335,6 +355,21 @@ function App() {
             >
               <i className="fas fa-calendar-check text-xl"></i>
               {t.hero.booking}
+            </a>
+          </div>
+
+          {/* Map Link */}
+          <div className="mt-6">
+            <a
+              href={googleMapsLink}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="inline-flex items-center gap-2 text-white/80 hover:text-[#C9A96E] transition-colors duration-300 group"
+            >
+              <i className="fas fa-map-marker-alt text-[#C9A96E] group-hover:scale-125 transition-transform duration-300"></i>
+              <span className="text-sm md:text-base font-medium border-b border-dashed border-white/40 group-hover:border-[#C9A96E] pb-0.5 transition-colors duration-300">
+                {t.hero.viewMap}
+              </span>
             </a>
           </div>
 
@@ -507,6 +542,78 @@ function App() {
         </div>
       </section>
 
+      {/* ===== LOCATION SECTION ===== */}
+      <section id="location" className="py-20 md:py-28 bg-gray-50">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="text-center mb-12">
+            <span className="inline-block bg-[#4A6B8A]/10 text-[#4A6B8A] px-4 py-1.5 rounded-full text-sm font-semibold mb-4">
+              <i className="fas fa-map-marker-alt mr-2"></i>
+              {t.location.title}
+            </span>
+            <h2 className="text-3xl md:text-4xl font-bold text-[#2C3E50] mb-4">
+              {t.location.title}
+            </h2>
+            <p className="text-gray-600 text-lg max-w-2xl mx-auto">
+              {t.location.subtitle}
+            </p>
+          </div>
+
+          {/* Map Info Cards */}
+          <div className="grid md:grid-cols-2 gap-6 mb-8">
+            <div className="bg-white p-6 rounded-2xl shadow-md border border-gray-100 flex items-center gap-4">
+              <div className="w-14 h-14 rounded-xl bg-gradient-to-br from-[#4A6B8A]/10 to-[#C9A96E]/10 flex items-center justify-center flex-shrink-0">
+                <i className="fas fa-map-pin text-2xl text-[#4A6B8A]"></i>
+              </div>
+              <div>
+                <h4 className="font-bold text-[#2C3E50] mb-1">
+                  {lang === 'ar' ? 'العنوان' : 'Address'}
+                </h4>
+                <p className="text-gray-600 text-sm">{t.location.address}</p>
+              </div>
+            </div>
+            <div className="bg-white p-6 rounded-2xl shadow-md border border-gray-100 flex items-center gap-4">
+              <div className="w-14 h-14 rounded-xl bg-gradient-to-br from-[#4A6B8A]/10 to-[#C9A96E]/10 flex items-center justify-center flex-shrink-0">
+                <i className="fas fa-location-dot text-2xl text-[#C9A96E]"></i>
+              </div>
+              <div>
+                <h4 className="font-bold text-[#2C3E50] mb-1">
+                  {lang === 'ar' ? 'مواقع قريبة' : 'Nearby'}
+                </h4>
+                <p className="text-gray-600 text-sm">{t.location.nearby}</p>
+              </div>
+            </div>
+          </div>
+
+          {/* Embedded Google Map */}
+          <div className="relative w-full h-96 rounded-2xl shadow-lg border border-gray-200 overflow-hidden mt-6">
+            <iframe
+              src={googleMapsEmbed}
+              width="100%"
+              height="100%"
+              style={{ border: 0 }}
+              allowFullScreen
+              loading="lazy"
+              referrerPolicy="no-referrer-when-downgrade"
+              title="Riva Suites Location - Irbid, Jordan"
+              className="absolute inset-0 w-full h-full"
+            ></iframe>
+          </div>
+
+          {/* Open in Google Maps Button */}
+          <div className="text-center mt-6">
+            <a
+              href={googleMapsLink}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="inline-flex items-center gap-3 bg-[#4A6B8A] text-white px-6 py-3 rounded-full font-semibold hover:bg-[#2C3E50] transition-all duration-300 hover:shadow-lg"
+            >
+              <i className="fas fa-directions"></i>
+              {lang === 'ar' ? 'احصل على الاتجاهات' : 'Get Directions'}
+            </a>
+          </div>
+        </div>
+      </section>
+
       {/* ===== CONTACT & FOOTER ===== */}
       <footer id="contact" className="bg-[#1a1a2e] text-white">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
@@ -576,6 +683,7 @@ function App() {
                   { key: 'about', id: 'about' },
                   { key: 'suites', id: 'gallery' },
                   { key: 'services', id: 'features' },
+                  { key: 'location', id: 'location' },
                   { key: 'contact', id: 'contact' },
                 ].map((item) => (
                   <button

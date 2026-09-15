@@ -202,9 +202,7 @@ function App() {
           <div className="flex items-center justify-between h-16 md:h-20">
             {/* Logo */}
             <div className="flex-shrink-0 flex items-center gap-2">
-              <div className="w-10 h-10 md:w-12 md:h-12 rounded-full bg-gradient-to-br from-[#4A6B8A] to-[#2C3E50] flex items-center justify-center">
-                <span className="text-white font-bold text-lg md:text-xl">R</span>
-              </div>
+              <img src="/images/logo.png" alt="Riva Suites Logo" className="w-12 h-12 md:w-16 md:h-16 object-contain drop-shadow-md" />
               <div className="flex flex-col">
                 <span className={`font-bold text-sm md:text-base ${isScrolled ? 'text-[#2C3E50]' : 'text-white'}`}>
                   {lang === 'ar' ? 'ريفا للأجنحة' : 'Riva Suites'}
@@ -312,8 +310,8 @@ function App() {
         {/* Background Image */}
         <div className="absolute inset-0">
           <img
-            src="https://images.unsplash.com/photo-1631049307264-da0ec9d70304?w=1920&q=80"
-            alt="Luxury Suite"
+            src="/images/hero-bg.jpg"
+            alt="Riva Suites"
             className="w-full h-full object-cover"
             loading="eager"
           />
@@ -621,9 +619,7 @@ function App() {
             {/* Brand Column */}
             <div>
               <div className="flex items-center gap-3 mb-6">
-                <div className="w-12 h-12 rounded-full bg-gradient-to-br from-[#4A6B8A] to-[#2C3E50] flex items-center justify-center">
-                  <span className="text-white font-bold text-xl">R</span>
-                </div>
+                <img src="/images/logo.png" alt="Riva Suites Logo" className="w-14 h-14 object-contain" />
                 <div>
                   <h3 className="font-bold text-lg">
                     {lang === 'ar' ? 'ريفا للأجنحة السكنية' : 'Riva Suites'}

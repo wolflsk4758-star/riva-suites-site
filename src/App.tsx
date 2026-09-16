@@ -20,7 +20,7 @@ const translations = {
       title: 'وجهتكم الأولى للإقامة المريحة والفاخرة في إربد',
       subtitle: 'في ريڤا تبدأ تجربة إقامة مختلفة، عنوانها الراحة، الخصوصية، والجودة. أجنحة عائلية مجهزة بالكامل لراحتكم.',
       whatsapp: 'تواصل عبر واتساب',
-      booking: 'احجز عبر Booking.com',
+      booking: 'احجز إقامتك الآن',
       viewMap: '📍 عرض الموقع على الخارطة',
     },
     about: {
@@ -74,6 +74,7 @@ const translations = {
     },
     floating: {
       text: 'تواصل معنا',
+      bookNow: 'للحجز المباشر',
     },
   },
   en: {
@@ -94,7 +95,7 @@ const translations = {
       title: 'Your Premier Destination for Comfortable & Luxury Stays in Irbid',
       subtitle: 'At Riva, a different stay experience begins—defined by comfort, privacy, and quality. Fully equipped family suites designed for your utmost comfort.',
       whatsapp: 'Contact via WhatsApp',
-      booking: 'Book via Booking.com',
+      booking: 'Book Your Stay Now',
       viewMap: '📍 View Location on Map',
     },
     about: {
@@ -148,6 +149,7 @@ const translations = {
     },
     floating: {
       text: 'Chat with us',
+      bookNow: 'Book Now',
     },
   },
 };
@@ -192,6 +194,8 @@ function App() {
     }
   };
 
+  // Links setup
+  const bookingLink = 'https://www.swiftbook.io/inst/#home?propertyId=221NzBEirj2pdTxTc1Nzk=&JDRN=Y';
   const whatsappLink = 'https://wa.me/962790097564?text=' + encodeURIComponent(lang === 'ar' ? 'مرحباً، أود الاستفسار عن الأجنحة السكنية' : 'Hello, I would like to inquire about the suites');
   const instagramLink = 'https://www.instagram.com/rivasuites?utm_source=ig_web_button_share_sheet&stkn=ZDNlZDc0MzIxNw==';
   const facebookLink = 'https://www.facebook.com/profile.php?id=61591212942882';
@@ -259,12 +263,12 @@ function App() {
 
               {/* CTA Button */}
               <a
-                href={whatsappLink}
+                href={bookingLink}
                 target="_blank"
                 rel="noopener noreferrer"
                 className="hidden sm:inline-flex items-center gap-2 bg-gradient-to-r from-[#C9A96E] to-[#B8860B] text-white px-4 py-2 rounded-full text-sm font-semibold hover:shadow-lg hover:scale-105 transition-all"
               >
-                <i className="fab fa-whatsapp"></i>
+                <i className="fas fa-calendar-check"></i>
                 {t.header.bookNow}
               </a>
 
@@ -300,12 +304,12 @@ function App() {
                 </button>
               ))}
               <a
-                href={whatsappLink}
+                href={bookingLink}
                 target="_blank"
                 rel="noopener noreferrer"
                 className="flex items-center justify-center gap-2 bg-gradient-to-r from-[#C9A96E] to-[#B8860B] text-white px-4 py-3 rounded-full text-sm font-semibold"
               >
-                <i className="fab fa-whatsapp"></i>
+                <i className="fas fa-calendar-check"></i>
                 {t.header.bookNow}
               </a>
             </div>
@@ -354,7 +358,7 @@ function App() {
               {t.hero.whatsapp}
             </a>
             <a
-              href="https://www.booking.com"
+              href={bookingLink}
               target="_blank"
               rel="noopener noreferrer"
               className="flex items-center gap-3 bg-white/10 backdrop-blur-sm border-2 border-white/40 text-white px-8 py-4 rounded-full text-lg font-semibold hover:bg-white hover:text-[#2C3E50] transition-all"
@@ -752,15 +756,31 @@ function App() {
         </div>
       </footer>
 
-      {/* ===== FLOATING WHATSAPP BUTTON ===== */}
-      <a
-        href={whatsappLink}
-        target="_blank"
-        rel="noopener noreferrer"
-        className={`fixed bottom-6 ${lang === 'ar' ? 'left-6' : 'right-6'} z-50 group`}
-        aria-label="Chat on WhatsApp"
-      >
-        <div className="relative">
+      {/* ===== FLOATING BUTTONS (WhatsApp & Booking) ===== */}
+      <div className={`fixed bottom-6 ${lang === 'ar' ? 'left-6' : 'right-6'} z-50 flex flex-col gap-4 items-center`}>
+
+        {/* 1. Booking Button */}
+        <a
+          href={bookingLink}
+          target="_blank"
+          rel="noopener noreferrer"
+          className="group flex items-center justify-center bg-gradient-to-r from-[#C9A96E] to-[#B8860B] text-white h-12 md:h-14 px-5 rounded-full shadow-2xl hover:scale-105 transition-all duration-300 animate-bounce"
+          aria-label="Direct Booking"
+        >
+          <i className="fas fa-calendar-check text-lg md:text-xl"></i>
+          <span className="font-bold text-sm md:text-base mx-2 whitespace-nowrap">
+            {t.floating.bookNow}
+          </span>
+        </a>
+
+        {/* 2. WhatsApp Button */}
+        <a
+          href={whatsappLink}
+          target="_blank"
+          rel="noopener noreferrer"
+          className="relative group"
+          aria-label="Chat on WhatsApp"
+        >
           {/* Pulse ring */}
           <div className="absolute inset-0 bg-[#25D366] rounded-full animate-ping opacity-30"></div>
           {/* Button */}
@@ -768,11 +788,12 @@ function App() {
             <i className="fab fa-whatsapp text-white text-2xl md:text-3xl"></i>
           </div>
           {/* Tooltip */}
-          <div className={`absolute bottom-full mb-2 ${lang === 'ar' ? 'left-0' : 'right-0'} bg-white text-[#2C3E50] text-xs font-semibold px-3 py-2 rounded-lg shadow-lg opacity-0 group-hover:opacity-100 transition-opacity whitespace-nowrap`}>
+          <div className={`absolute top-1/2 -translate-y-1/2 ${lang === 'ar' ? 'left-full ml-3' : 'right-full mr-3'} bg-white text-[#2C3E50] text-xs font-semibold px-3 py-2 rounded-lg shadow-lg opacity-0 group-hover:opacity-100 transition-opacity whitespace-nowrap pointer-events-none`}>
             {t.floating.text}
           </div>
-        </div>
-      </a>
+        </a>
+
+      </div>
     </div>
   );
 }

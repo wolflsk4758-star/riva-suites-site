@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useRef } from 'react';
 
 // Translation dictionary
 const translations = {
@@ -156,6 +156,7 @@ function App() {
   const [lang, setLang] = useState<'ar' | 'en'>('ar');
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [isScrolled, setIsScrolled] = useState(false);
+  const sliderRef = useRef<HTMLDivElement>(null);
 
   const t = translations[lang];
 
@@ -181,6 +182,13 @@ function App() {
     if (el) {
       el.scrollIntoView({ behavior: 'smooth' });
       setIsMenuOpen(false);
+    }
+  };
+
+  const scrollSlider = (direction: 'left' | 'right') => {
+    if (sliderRef.current) {
+      const scrollAmount = direction === 'left' ? -400 : 400;
+      sliderRef.current.scrollBy({ left: scrollAmount, behavior: 'smooth' });
     }
   };
 
@@ -395,7 +403,7 @@ function App() {
             <div className="relative">
               <div className="rounded-2xl overflow-hidden shadow-2xl">
                 <img
-                  src="https://images.unsplash.com/photo-1590490360182-c33d57733427?w=800&q=80"
+                  src="/images/hero-bg.jpg"
                   alt="Riva Suites Interior"
                   className="w-full h-80 md:h-96 object-cover"
                   loading="lazy"
@@ -462,8 +470,8 @@ function App() {
         </div>
       </section>
 
-      {/* ===== GALLERY SECTION ===== */}
-      <section id="gallery" className="py-20 md:py-28 bg-white">
+      {/* ===== GALLERY SECTION (CAROUSEL) ===== */}
+      <section id="gallery" className="py-20 md:py-28 bg-white overflow-hidden">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-16">
             <span className="inline-block bg-[#4A6B8A]/10 text-[#4A6B8A] px-4 py-1.5 rounded-full text-sm font-semibold mb-4">
@@ -474,36 +482,51 @@ function App() {
             </h2>
           </div>
 
-          <div className="grid grid-cols-2 md:grid-cols-3 gap-4">
-            {[
-              { src: 'https://images.unsplash.com/photo-1631049307264-da0ec9d70304?w=600&q=80', alt: 'Suite Living Room' },
-              { src: 'https://images.unsplash.com/photo-1590490360182-c33d57733427?w=600&q=80', alt: 'Bedroom' },
-              { src: 'https://images.unsplash.com/photo-1582719478250-c89cae4dc85b?w=600&q=80', alt: 'Bathroom' },
-              { src: 'https://images.unsplash.com/photo-1566665797739-1674de7a421a?w=600&q=80', alt: 'Reception' },
-              { src: 'https://images.unsplash.com/photo-1618773928121-c32242e63f39?w=600&q=80', alt: 'Master Suite' },
-              { src: 'https://images.unsplash.com/photo-1595576508898-0ad5c879a061?w=600&q=80', alt: 'Kitchen' },
-            ].map((img, idx) => (
-              <div
-                key={idx}
-                className={`relative overflow-hidden rounded-2xl group cursor-pointer ${
-                  idx === 0 ? 'md:col-span-2 md:row-span-2' : ''
-                }`}
-              >
-                <img
-                  src={img.src}
-                  alt={img.alt}
-                  className={`w-full object-cover group-hover:scale-110 transition-transform duration-500 ${
-                    idx === 0 ? 'h-64 md:h-full' : 'h-48 md:h-56'
-                  }`}
-                  loading="lazy"
-                />
-                <div className="absolute inset-0 bg-gradient-to-t from-black/50 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-end p-4">
-                  <span className="text-white font-semibold text-sm">{img.alt}</span>
+          <div className="relative group">
+            {/* Prev Button */}
+            <button
+              onClick={() => scrollSlider(lang === 'ar' ? 'right' : 'left')}
+              className="absolute top-1/2 -left-2 md:-left-6 -translate-y-1/2 z-10 bg-white shadow-lg text-[#2C3E50] w-10 h-10 md:w-12 md:h-12 rounded-full flex items-center justify-center hover:bg-[#C9A96E] hover:text-white transition-all opacity-0 group-hover:opacity-100 focus:opacity-100"
+            >
+              <i className={`fas fa-chevron-${lang === 'ar' ? 'right' : 'left'}`}></i>
+            </button>
+
+            {/* Slider Container */}
+            <div
+              ref={sliderRef}
+              className="flex overflow-x-auto gap-4 pb-4 snap-x snap-mandatory scroll-smooth"
+              style={{ scrollbarWidth: 'none', msOverflowStyle: 'none' }}
+            >
+              {/* Array of 15 dynamically calling 1.jpg to 15.jpg */}
+              {[...Array(15)].map((_, idx) => (
+                <div
+                  key={idx}
+                  className="relative flex-shrink-0 w-[85vw] sm:w-[60vw] md:w-[40vw] lg:w-[25vw] snap-center rounded-2xl overflow-hidden cursor-pointer"
+                >
+                  <img
+                    src={`/images/${idx + 1}.jpg`}
+                    alt={`Suite Image ${idx + 1}`}
+                    className="w-full h-64 md:h-80 object-cover hover:scale-110 transition-transform duration-500"
+                    loading="lazy"
+                  />
                 </div>
-              </div>
-            ))}
+              ))}
+            </div>
+
+            {/* Next Button */}
+            <button
+              onClick={() => scrollSlider(lang === 'ar' ? 'left' : 'right')}
+              className="absolute top-1/2 -right-2 md:-right-6 -translate-y-1/2 z-10 bg-white shadow-lg text-[#2C3E50] w-10 h-10 md:w-12 md:h-12 rounded-full flex items-center justify-center hover:bg-[#C9A96E] hover:text-white transition-all opacity-0 group-hover:opacity-100 focus:opacity-100"
+            >
+              <i className={`fas fa-chevron-${lang === 'ar' ? 'left' : 'right'}`}></i>
+            </button>
           </div>
         </div>
+        
+        {/* Hide default scrollbar with CSS block directly */}
+        <style dangerouslySetInnerHTML={{__html: `
+          #gallery ::-webkit-scrollbar { display: none; }
+        `}} />
       </section>
 
       {/* ===== CTA BANNER ===== */}
